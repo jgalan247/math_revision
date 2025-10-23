@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder - Math Revision Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-blue-600 text-white shadow-md">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold">Math Revision Platform</h1>
+                <div class="space-x-4">
+                    <a href="index.html" class="hover:text-blue-200">Home</a>
+                    <a href="prompt-builder.html" class="hover:text-blue-200">Prompt Builder</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Corbett Maths Worksheet Prompt Builder</h2>
+                <p class="text-gray-600 mb-6">Generate a prompt for creating math worksheet JSONs from Corbett Maths PDFs</p>
+                
+                <form id="promptForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Topic</label>
+                        <select id="topic" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="Fractions">Fractions</option>
+                            <option value="Linear Equations">Linear Equations</option>
+                            <option value="Simultaneous Equations">Simultaneous Equations</option>
+                            <option value="Quadratics">Quadratics</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
+                        <select id="difficulty" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="difficult">Difficult</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Grade</label>
+                        <select id="grade" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="KS3">KS3</option>
+                            <option value="KS4 Foundation">KS4 Foundation</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Questions PDF URL</label>
+                        <input type="url" id="questionsUrl" placeholder="https://corbettmaths.com/wp-content/uploads/..." 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Answers PDF URL</label>
+                        <input type="url" id="answersUrl" placeholder="https://corbettmaths.com/wp-content/uploads/..." 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               required>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium">
+                        Generate Prompt
+                    </button>
+                </form>
+
+                <div id="output" class="mt-8 hidden">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800">Generated Prompt</h3>
+                        <button id="copyBtn" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors text-sm">
+                            Copy to Clipboard
+                        </button>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-300 rounded-md p-6">
+                        <pre id="promptOutput" class="whitespace-pre-wrap text-sm text-gray-800 font-mono"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/prompt-builder.js"></script>
+</body>
+</html>

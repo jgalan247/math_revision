@@ -1,0 +1,26 @@
+# Development files
+.git
+.gitignore
+.claude
+*.md
+!README.md
+
+# Test files
+debug-test.html
+test-keyboard.html
+
+# Documentation (optional - remove this line to include docs in deployment)
+ANSWER_CHECKING_GUIDE.md
+BUGFIX_SUMMARY.md
+CLAUDE.md
+COMPLETE_WORKFLOW_GUIDE.md
+ENHANCED_INTERFACE_GUIDE.md
+FEATURES_OVERVIEW.md
+IMPLEMENTATION_SUMMARY.md
+IMPLEMENTATION_VERIFICATION.md
+QUADRATIC_DUAL_FIELDS.md
+READY_TO_TEST.md
+TESTING_SUMMARY.md
+TWO_INPUT_AREAS_GUIDE.md
+UX_FLOW_EXPLANATION.md
+VERIFICATION_CHECKLIST.md

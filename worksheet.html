@@ -7,6 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    
+    <!-- MathLive -->
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive-static.css">
+    <script defer src="https://unpkg.com/mathlive"></script>
+    
     <link rel="stylesheet" href="css/worksheet.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -32,6 +37,16 @@
             </div>
         </div>
 
+        <!-- Progress Section -->
+        <div id="progress-section" class="progress-section" style="display: none;">
+            <div id="progress-text" class="progress-text">0/0 answered (0 correct)</div>
+            <div class="progress-bar-container">
+                <div id="progress-fill" class="progress-bar-fill" style="width: 0%;">
+                    <span id="progress-percentage" class="progress-percentage"></span>
+                </div>
+            </div>
+        </div>
+
         <div id="questions-container"></div>
 
         <div class="bg-white rounded-lg shadow-md p-6 mt-6">
@@ -52,6 +67,7 @@
 
     <script src="js/katex-renderer.js"></script>
     <script src="js/answer-checker.js"></script>
+    <script src="js/mathlive-handler.js"></script>
     <script src="js/worksheet-loader.js"></script>
     <script>
         // Load worksheet based on URL parameter

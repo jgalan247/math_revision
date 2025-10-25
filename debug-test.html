@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test - Enhanced Worksheet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+    <!-- MathLive -->
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive-static.css">
+    <script defer src="https://unpkg.com/mathlive"></script>
+
+    <link rel="stylesheet" href="css/worksheet.css">
+    <style>
+        .debug-log {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: #0f0;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-width: 400px;
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 5px;
+            z-index: 10000;
+        }
+        .debug-log div {
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div id="debug-log" class="debug-log"></div>
+
+    <main class="container mx-auto px-6 py-8 max-w-4xl">
+        <h1 class="text-2xl font-bold mb-4">Debug Test - Enhanced Worksheet Interface</h1>
+
+        <div id="questions-container"></div>
+    </main>
+
+    <script src="js/katex-renderer.js"></script>
+    <script src="js/answer-checker.js"></script>
+    <script src="js/mathlive-handler.js"></script>
+    <script src="js/worksheet-loader.js"></script>
+    <script>
+        // Debug logger
+        const debugLog = document.getElementById('debug-log');
+        function log(message) {
+            const div = document.createElement('div');
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            debugLog.appendChild(div);
+            debugLog.scrollTop = debugLog.scrollHeight;
+            console.log(message);
+        }
+
+        log('Page loaded');
+
+        // Simple test worksheet
+        const testWorksheet = {
+            "id": "debug-test",
+            "title": "Debug Test",
+            "topic": "Quadratics",
+            "grade": "KS4",
+            "difficulty": "easy",
+            "estimatedTime": 5,
+            "questions": [
+                {
+                    "prompt_latex": "\\text{Solve: } x^{2} - 5x + 6 = 0",
+                    "answer": {
+                        "roots": [2, 3]
+                    },
+                    "marking": {
+                        "method": "solution_set",
+                        "tolerance": 0.01
+                    },
+                    "meta": {
+                        "coefficients": {
+                            "a": 1,
+                            "b": -5,
+                            "c": 6
+                        }
+                    }
+                }
+            ]
+        };
+
+        log('Test worksheet created');
+
+        // Wait for MathLive to load
+        function waitForMathLive() {
+            if (typeof MathfieldElement !== 'undefined') {
+                log('MathLive loaded');
+                initTest();
+            } else {
+                log('Waiting for MathLive...');
+                setTimeout(waitForMathLive, 100);
+            }
+        }
+
+        function initTest() {
+            log('Initializing test');
+            currentWorksheet = testWorksheet;
+            questionStatus = {};
+
+            const container = document.getElementById('questions-container');
+            const question = testWorksheet.questions[0];
+            const index = 0;
+
+            log('Creating question card');
+            const card = createQuestionCard(question, index);
+            container.appendChild(card);
+            log('Question card created');
+
+            // Monitor focus events
+            setTimeout(() => {
+                const workArea = document.getElementById('work-area-0');
+                const mathField = document.getElementById('math-field-0');
+
+                if (workArea) {
+                    log('Work area found: ' + workArea.id);
+                    workArea.addEventListener('focus', () => log('Work area FOCUSED'));
+                    workArea.addEventListener('blur', () => log('Work area BLURRED'));
+
+                    setTimeout(() => {
+                        if (document.activeElement === workArea) {
+                            log('✓ Work area is auto-focused!');
+                        } else {
+                            log('✗ Work area NOT focused. Active element: ' + document.activeElement.tagName);
+                        }
+                    }, 500);
+                } else {
+                    log('✗ Work area NOT found!');
+                }
+
+                if (mathField) {
+                    log('Math field found: ' + mathField.id);
+                } else {
+                    log('✗ Math field NOT found!');
+                }
+
+                const checkBtn = document.getElementById('check-btn-0');
+                if (checkBtn) {
+                    log('Check button found');
+                    checkBtn.addEventListener('click', () => {
+                        log('Check button clicked');
+                    });
+                } else {
+                    log('✗ Check button NOT found!');
+                }
+            }, 300);
+        }
+
+        setTimeout(waitForMathLive, 100);
+    </script>
+</body>
+</html>

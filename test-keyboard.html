@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathLive Keyboard Test</title>
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive-static.css">
+    <script defer src="https://unpkg.com/mathlive"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        math-field {
+            width: 100%;
+            font-size: 1.5em;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>MathLive Custom Keyboard Test</h1>
+
+    <div class="info">
+        <p><strong>Instructions:</strong> Click on the math field below and check what keyboards appear.</p>
+    </div>
+
+    <math-field id="test-field">x^2 + y^2 = z^2</math-field>
+
+    <div class="info" id="output">
+        Waiting for math field to load...
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Wait for MathLive to load
+            setTimeout(() => {
+                const mf = document.getElementById('test-field');
+                const output = document.getElementById('output');
+
+                // Define custom keyboards
+                const customKeyboards = {
+                    'ks3-ks4': {
+                        label: 'KS3/KS4',
+                        tooltip: 'Extended keyboard for KS3/KS4 curriculum',
+                        rows: [
+                            [
+                                { class: 'small', latex: '\\frac{#@}{#?}', label: '□/□' },
+                                { class: 'small', latex: '#@^{#?}', label: '□^□' },
+                                { class: 'small', latex: '#@^{2}', label: '□²' },
+                                { class: 'small', latex: '#@^{3}', label: '□³' },
+                                { class: 'small', latex: '#@^{-1}', label: '□⁻¹' },
+                            ],
+                            [
+                                { class: 'small', latex: '\\sqrt{#0}', label: '√□' },
+                                { class: 'small', latex: '\\sqrt[3]{#0}', label: '³√□' },
+                                { class: 'small', latex: '\\sqrt[#0]{#?}', label: 'ⁿ√□' },
+                                { class: 'small', latex: '\\pi', label: 'π' },
+                                { class: 'small', latex: '\\%', label: '%' },
+                            ],
+                            [
+                                { latex: '7', label: '7' },
+                                { latex: '8', label: '8' },
+                                { latex: '9', label: '9' },
+                                { latex: '\\div', label: '÷' },
+                                { latex: '\\times', label: '×' },
+                            ],
+                            [
+                                { latex: '4', label: '4' },
+                                { latex: '5', label: '5' },
+                                { latex: '6', label: '6' },
+                                { latex: '+', label: '+' },
+                                { latex: '-', label: '−' },
+                            ],
+                            [
+                                { latex: '1', label: '1' },
+                                { latex: '2', label: '2' },
+                                { latex: '3', label: '3' },
+                                { latex: '=', label: '=' },
+                                { latex: ':', label: ':' },
+                            ],
+                            [
+                                { latex: '0', label: '0' },
+                                { latex: '.', label: '.' },
+                                { class: 'small', latex: '\\left(#0\\right)', label: '( )' },
+                                { class: 'action', command: ['performWithFeedback', 'deleteBackward'], label: '⌫' },
+                                { class: 'action', command: ['performWithFeedback', 'deletePreviousWord'], label: 'Clear' },
+                            ]
+                        ]
+                    }
+                };
+
+                // Configure MathLive
+                mf.setOptions({
+                    virtualKeyboards: 'ks3-ks4',
+                    customVirtualKeyboards: customKeyboards,
+                    virtualKeyboardMode: 'onfocus'
+                });
+
+                output.innerHTML = `
+                    <p><strong>Configuration:</strong></p>
+                    <p>Virtual Keyboards: ${mf.getOption('virtualKeyboards')}</p>
+                    <p>Custom Keyboards defined: ${Object.keys(customKeyboards).join(', ')}</p>
+                    <p>Keyboard Mode: ${mf.getOption('virtualKeyboardMode')}</p>
+                `;
+
+                console.log('MathLive version:', window.mathlive?.version || 'Unknown');
+                console.log('virtualKeyboards option:', mf.getOption('virtualKeyboards'));
+                console.log('Custom keyboards:', customKeyboards);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

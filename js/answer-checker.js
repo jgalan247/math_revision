@@ -1,6 +1,7 @@
-// Answer Checker - Validates student answers
+// Answer Checker - Validates student answers (works with LaTeX from MathLive)
 class AnswerChecker {
     static check(studentAnswer, correctAnswer, markingMethod, tolerance = 0.01) {
+        // studentAnswer is now LaTeX from MathLive
         switch (markingMethod) {
             case 'fraction_equivalence':
                 return this.checkFraction(studentAnswer, correctAnswer, tolerance);
@@ -16,7 +17,6 @@ class AnswerChecker {
     }
 
     static checkFraction(studentAnswer, correctAnswer, tolerance) {
-        // Parse fraction or decimal
         const studentValue = this.parseFraction(studentAnswer);
         const correctValue = this.parseFraction(correctAnswer.exact_latex);
         
@@ -26,7 +26,6 @@ class AnswerChecker {
 
         const isCorrect = Math.abs(studentValue - correctValue) < tolerance;
         
-        // Also check alternative formats
         if (!isCorrect && correctAnswer.alt) {
             for (let alt of correctAnswer.alt) {
                 const altValue = this.parseFraction(alt);
@@ -38,15 +37,15 @@ class AnswerChecker {
 
         return {
             correct: isCorrect,
-            message: isCorrect ? 'Correct!' : `Incorrect. Expected: ${correctAnswer.exact_latex}`
+            message: isCorrect ? 'Correct!' : `Incorrect. Expected: ${this.latexToDisplay(correctAnswer.exact_latex)}`
         };
     }
 
     static checkNumeric(studentAnswer, correctAnswer, tolerance) {
-        const studentValue = parseFloat(studentAnswer);
-        const correctValue = parseFloat(correctAnswer.exact_latex);
+        const studentValue = this.parseNumeric(studentAnswer);
+        const correctValue = this.parseNumeric(correctAnswer.exact_latex);
 
-        if (isNaN(studentValue) || isNaN(correctValue)) {
+        if (studentValue === null || correctValue === null) {
             return { correct: false, message: 'Invalid number format' };
         }
 
@@ -59,10 +58,10 @@ class AnswerChecker {
     }
 
     static checkSolutionPair(studentAnswer, correctAnswer, tolerance) {
-        // Parse input like "x=2, y=3" or "(2,3)" or "2,3"
-        const matches = studentAnswer.match(/[\d.-]+/g);
+        // Parse LaTeX or text input like "x=2, y=3"
+        const matches = studentAnswer.match(/[-]?\d+\.?\d*/g);
         if (!matches || matches.length !== 2) {
-            return { correct: false, message: 'Invalid format. Expected: x=a, y=b' };
+            return { correct: false, message: 'Invalid format. Expected: x=a, y=b or (a,b)' };
         }
 
         const studentX = parseFloat(matches[0]);
@@ -80,7 +79,6 @@ class AnswerChecker {
     }
 
     static checkSolutionSet(studentAnswer, correctAnswer, tolerance) {
-        // Parse roots like "x=-2 or x=3" or "-2, 3"
         const matches = studentAnswer.match(/[-]?\d+\.?\d*/g);
         if (!matches || matches.length !== correctAnswer.roots.length) {
             return { correct: false, message: 'Invalid format or wrong number of roots' };
@@ -100,36 +98,75 @@ class AnswerChecker {
     }
 
     static checkExact(studentAnswer, correctAnswer) {
-        const student = studentAnswer.trim().toLowerCase();
-        const correct = correctAnswer.exact_latex.toLowerCase();
+        // Normalize LaTeX for comparison
+        const student = this.normalizeLatex(studentAnswer);
+        const correct = this.normalizeLatex(correctAnswer.exact_latex);
 
-        const isCorrect = student === correct;
+        let isCorrect = student === correct;
+
+        // Check alternative answers if provided
+        if (!isCorrect && correctAnswer.alt) {
+            for (let alt of correctAnswer.alt) {
+                const normalizedAlt = this.normalizeLatex(alt);
+                if (student === normalizedAlt) {
+                    isCorrect = true;
+                    break;
+                }
+            }
+        }
 
         return {
             correct: isCorrect,
-            message: isCorrect ? 'Correct!' : `Incorrect. Expected: ${correctAnswer.exact_latex}`
+            message: isCorrect ? 'Correct!' : `Incorrect. Expected: ${this.latexToDisplay(correctAnswer.exact_latex)}`
         };
     }
 
     static parseFraction(input) {
         // Handle LaTeX fractions like \frac{3}{4}
-        const latexMatch = input.match(/\\frac\{(-?\d+)\}\{(-?\d+)\}/);
+        const latexMatch = input.match(/\\frac\{([^}]+)\}\{([^}]+)\}/);
         if (latexMatch) {
-            return parseFloat(latexMatch[1]) / parseFloat(latexMatch[2]);
+            const num = this.parseNumeric(latexMatch[1]);
+            const den = this.parseNumeric(latexMatch[2]);
+            if (num !== null && den !== null && den !== 0) {
+                return num / den;
+            }
         }
 
         // Handle text fractions like 3/4
-        const fractionMatch = input.match(/^(-?\d+)\/(-?\d+)$/);
+        const fractionMatch = input.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
         if (fractionMatch) {
-            return parseFloat(fractionMatch[1]) / parseFloat(fractionMatch[2]);
+            const num = parseFloat(fractionMatch[1]);
+            const den = parseFloat(fractionMatch[2]);
+            if (!isNaN(num) && !isNaN(den) && den !== 0) {
+                return num / den;
+            }
         }
 
         // Handle decimals
-        const decimal = parseFloat(input);
-        if (!isNaN(decimal)) {
-            return decimal;
-        }
+        return this.parseNumeric(input);
+    }
 
-        return null;
+    static parseNumeric(input) {
+        // Remove LaTeX commands and extract numbers
+        const cleaned = input.replace(/\\[a-zA-Z]+/g, '').replace(/[{}]/g, '').trim();
+        const num = parseFloat(cleaned);
+        return isNaN(num) ? null : num;
+    }
+
+    static normalizeLatex(latex) {
+        return latex
+            .replace(/\s+/g, '')
+            .replace(/\\left/g, '')
+            .replace(/\\right/g, '')
+            .toLowerCase();
+    }
+
+    static latexToDisplay(latex) {
+        // Convert LaTeX to more readable format for error messages
+        return latex
+            .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '$1/$2')
+            .replace(/\^/g, '^')
+            .replace(/\\times/g, '×')
+            .replace(/\\div/g, '÷');
     }
 }

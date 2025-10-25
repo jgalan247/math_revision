@@ -1,3 +1,8 @@
+/* Utility classes */
+.hidden {
+    display: none !important;
+}
+
 /* Worksheet-specific styles */
 .question-card {
     background: white;
@@ -5,6 +10,20 @@
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #e5e7eb;
+    transition: border-color 0.3s ease;
+}
+
+.question-card.answered {
+    border-left-color: #3b82f6;
+}
+
+.question-card.correct {
+    border-left-color: #10b981;
+}
+
+.question-card.incorrect {
+    border-left-color: #ef4444;
 }
 
 .question-number {
@@ -20,8 +39,121 @@
     min-height: 3rem;
 }
 
+.answer-input-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+}
+
+/* Work area label */
+.work-area-label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+.work-area-hint {
+    font-weight: 400;
+    color: #10b981;
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+/* Work area container */
+.work-area-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Work area as MathLive field for showing calculations */
+.work-area-mathfield {
+    flex: 1;
+    min-height: 120px;
+    padding: 0.75rem;
+    border: 2px dashed #d1d5db !important;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background: #f9fafb !important;
+    transition: border-color 0.2s, border-style 0.2s;
+}
+
+.work-area-mathfield:focus-within {
+    outline: none;
+    border-color: #6b7280 !important;
+    border-style: solid !important;
+    background: white !important;
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+}
+
+/* Final answer field */
+.answer-field-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.answer-field-hint {
+    font-weight: 400;
+    color: #9ca3af;
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+.answer-field-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.answer-field {
+    flex: 1;
+}
+
+/* Dual fields for quadratic equations */
+.dual-fields-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.answer-field-container.quadratic-field {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 0;
+}
+
+.quadratic-field-label {
+    font-weight: 600;
+    color: #374151;
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.answer-field math-field {
+    border: 2px solid #3b82f6;
+    background: #eff6ff;
+}
+
+.answer-field math-field.correct {
+    border-color: #10b981;
+    background-color: #d1fae5;
+}
+
+.answer-field math-field.incorrect {
+    border-color: #ef4444;
+    background-color: #fee2e2;
+}
+
 .answer-input {
-    width: 100%;
+    flex: 1;
     padding: 0.75rem;
     border: 2px solid #d1d5db;
     border-radius: 0.5rem;
@@ -44,23 +176,362 @@
     background-color: #fee2e2;
 }
 
+/* MathLive Input Styling */
+math-field {
+    flex: 1;
+    padding: 0.5rem;
+    border: 2px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    min-height: 50px;
+    transition: border-color 0.2s;
+    background: white;
+}
+
+math-field:focus-within {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+math-field.correct {
+    border-color: #10b981;
+    background-color: #d1fae5;
+}
+
+math-field.incorrect {
+    border-color: #ef4444;
+    background-color: #fee2e2;
+}
+
+/* Keyboard Toggle Button */
+.keyboard-toggle {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #d1d5db;
+    border-radius: 0.5rem;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.keyboard-toggle:hover {
+    background: #f3f4f6;
+    border-color: #3b82f6;
+}
+
+.keyboard-toggle.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.keyboard-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: #6b7280;
+}
+
+.keyboard-toggle.active svg {
+    fill: white;
+}
+
+/* MathLive Virtual Keyboard Customization */
+.ML__keyboard {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ML__keyboard--calculator {
+    background: #f9fafb;
+}
+
+/* Action buttons */
+.question-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-compute {
+    background: #8b5cf6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-compute:hover {
+    background: #7c3aed;
+}
+
+.btn-compute:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+
+.btn-check {
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-check:hover {
+    background: #2563eb;
+}
+
+.btn-check:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+
+/* Computed result box */
+.computed-result {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f3e8ff;
+    border: 2px solid #8b5cf6;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.computed-result-title {
+    font-weight: 600;
+    color: #6b21a8;
+    margin-bottom: 0.5rem;
+}
+
+.computed-result-value {
+    font-family: 'Courier New', monospace;
+    color: #581c87;
+    font-size: 1.1rem;
+}
+
+/* Feedback styles */
 .feedback {
     margin-top: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 0.375rem;
-    font-size: 0.875rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
 }
 
 .feedback.correct {
     background-color: #d1fae5;
     color: #065f46;
+    border: 1px solid #10b981;
 }
 
 .feedback.incorrect {
     background-color: #fee2e2;
     color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+.feedback-icon {
+    font-size: 1.2rem;
+}
+
+/* Status badge */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge.unanswered {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.status-badge.answered {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-badge.correct {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.incorrect {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Progress bar */
+.progress-section {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.progress-text {
+    font-size: 0.95rem;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 24px;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.5rem;
+}
+
+.progress-percentage {
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
 .katex {
     font-size: 1.2em;
+}
+
+/* MathLive custom keyboard layout */
+.ML__keycap {
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 1.1em;
+}
+
+/* Hide MathLive's default keyboard toggle button */
+.ML__virtual-keyboard-toggle,
+math-field::part(virtual-keyboard-toggle) {
+    display: none !important;
+}
+
+/* Quadratic keyboard formula styling */
+.ML__keycap.large-formula {
+    min-width: 400px !important;
+    padding: 10px !important;
+    font-size: 1.3em !important;
+    background: #e3f2fd !important;
+    border: 2px solid #2196f3 !important;
+}
+
+.ML__keycap.large-formula:hover {
+    background: #bbdefb !important;
+}
+
+/* Quadratic plotter styling */
+.quadratic-plot-wrapper {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.quadratic-canvas {
+    display: block;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.quadratic-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.375rem;
+    border: 1px solid #e5e7eb;
+}
+
+.plot-info-row {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.95rem;
+}
+
+.plot-info-row:last-child {
+    border-bottom: none;
+}
+
+.plot-info-row strong {
+    color: #374151;
+    margin-right: 0.5rem;
+}
+
+.info-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.info-badge.success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.info-badge.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.info-badge.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Hide unwanted MathLive keyboard tabs (Greek, symbols, etc.) */
+/* Try multiple selectors to catch different MathLive versions */
+.MLK__tab-label[data-label="greek"],
+.MLK__tab-label[data-label="symbols"],
+.MLK__tab-label[data-label="numeric"],
+.MLK__tab[data-label="greek"],
+.MLK__tab[data-label="symbols"],
+.MLK__tab[data-label="numeric"],
+.ML__keyboard-menu-item[data-keyboard="greek"],
+.ML__keyboard-menu-item[data-keyboard="symbols"],
+.ML__keyboard-menu-item[data-keyboard="numeric"],
+/* Also try matching by text content in tabs */
+.ML__keyboard-toolbar-button:has([data-label*="greek" i]),
+.ML__keyboard-toolbar-button:has([data-label*="symbols" i]),
+.ML__keyboard-toolbar-button:has([data-label*="numeric" i]),
+/* Try matching the actual tab buttons */
+button.ML__tab-button[data-layer="greek"],
+button.ML__tab-button[data-layer="symbols"],
+button.ML__tab-button[data-layer="numeric"] {
+    display: none !important;
+    visibility: hidden !important;
 }

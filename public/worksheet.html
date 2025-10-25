@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet - Math Revision Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    
+    <!-- MathLive -->
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive-static.css">
+    <script defer src="https://unpkg.com/mathlive"></script>
+    
+    <link rel="stylesheet" href="css/worksheet.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-blue-600 text-white shadow-md">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold">Math Revision Platform</h1>
+                <div class="space-x-4">
+                    <a href="index.html" class="hover:text-blue-200">← Back to Home</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 max-w-4xl">
+        <div id="worksheet-header" class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 id="worksheet-title" class="text-3xl font-bold text-gray-800 mb-2">Loading...</h2>
+            <div class="flex gap-4 text-sm text-gray-600">
+                <span id="worksheet-topic"></span>
+                <span id="worksheet-grade"></span>
+                <span id="worksheet-difficulty"></span>
+                <span id="worksheet-time"></span>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div id="progress-section" class="progress-section" style="display: none;">
+            <div id="progress-text" class="progress-text">0/0 answered (0 correct)</div>
+            <div class="progress-bar-container">
+                <div id="progress-fill" class="progress-bar-fill" style="width: 0%;">
+                    <span id="progress-percentage" class="progress-percentage"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+            <button id="submit-btn" class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium text-lg">
+                Submit Answers
+            </button>
+        </div>
+
+        <div id="results" class="hidden bg-white rounded-lg shadow-md p-6 mt-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Results</h3>
+            <div id="score" class="text-xl mb-4"></div>
+            <div id="results-details"></div>
+            <button id="retry-btn" class="mt-4 bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">
+                Try Again
+            </button>
+        </div>
+    </main>
+
+    <script src="js/katex-renderer.js"></script>
+    <script src="js/answer-checker.js"></script>
+    <script src="js/mathlive-handler.js"></script>
+    <script src="js/worksheet-loader.js"></script>
+    <script>
+        // Load worksheet based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const worksheetId = urlParams.get('id');
+        if (worksheetId) {
+            loadWorksheet(worksheetId);
+        }
+    </script>
+</body>
+</html>

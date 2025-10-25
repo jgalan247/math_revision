@@ -7,6 +7,8 @@ static_sites:
       branch: main
       deploy_on_push: true
     source_dir: /
+    build_command: mkdir -p public && cp -r * public/ 2>/dev/null || true
+    output_dir: public
     index_document: index.html
     error_document: index.html
     routes:

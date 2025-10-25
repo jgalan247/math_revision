@@ -6,8 +6,7 @@ static_sites:
       repo: jgalan247/math_revision
       branch: main
       deploy_on_push: true
-    build_command: echo "No build required - static site"
-    output_dir: /
+    source_dir: /
     index_document: index.html
     error_document: index.html
     routes:

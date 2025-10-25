@@ -3,3 +3,9 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Build directories (DigitalOcean creates this)
+public/
+dist/
+build/
+_static/

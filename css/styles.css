@@ -1,0 +1,38 @@
+/* Global styles for Math Revision Platform */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+}
+
+.worksheet-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.worksheet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.katex-display {
+    margin: 1em 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 9999px;
+}
+
+.badge-easy { background-color: #d1fae5; color: #065f46; }
+.badge-medium { background-color: #fef3c7; color: #92400e; }
+.badge-difficult { background-color: #fee2e2; color: #991b1b; }
+.badge-ks3 { background-color: #dbeafe; color: #1e40af; }
+.badge-ks4 { background-color: #e0e7ff; color: #3730a3; }

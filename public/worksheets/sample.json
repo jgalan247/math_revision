@@ -1,0 +1,58 @@
+{
+  "id": "sample",
+  "title": "Sample Math Worksheet",
+  "topic": "Fractions",
+  "grade": "KS3",
+  "difficulty": "easy",
+  "estimatedTime": 10,
+  "sources": {
+    "questions": "",
+    "answers": ""
+  },
+  "questions": [
+    {
+      "prompt_latex": "\\text{Simplify: } \\frac{2}{3} + \\frac{1}{3}",
+      "answer": {
+        "exact_latex": "1",
+        "alt": ["1", "3/3", "\\frac{3}{3}"]
+      },
+      "marking": {
+        "method": "fraction_equivalence",
+        "tolerance": 0.01
+      },
+      "meta": {
+        "subtopic": "Adding fractions with same denominator",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "prompt_latex": "\\text{What is } \\frac{1}{2} + \\frac{1}{4}?",
+      "answer": {
+        "exact_latex": "\\frac{3}{4}",
+        "alt": ["0.75", "3/4"]
+      },
+      "marking": {
+        "method": "fraction_equivalence",
+        "tolerance": 0.01
+      },
+      "meta": {
+        "subtopic": "Adding fractions with different denominators",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "prompt_latex": "\\text{Solve: } 2x + 5 = 13",
+      "answer": {
+        "exact_latex": "4"
+      },
+      "marking": {
+        "method": "numeric_equal",
+        "tolerance": 0.01
+      },
+      "meta": {
+        "subtopic": "Linear equations",
+        "difficulty": "easy"
+      }
+    }
+  ]
+}

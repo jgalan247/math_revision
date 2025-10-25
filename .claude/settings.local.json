@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "WebSearch",
+      "WebFetch(domain:cortexjs.io)",
+      "WebFetch(domain:mathlive.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Complete MathLive integration with dual fields for quadratic equations\n\nImplements the complete student workflow for quadratic equations:\n- Students can use MathLive keyboard in work area to insert formulas\n- Quadratic formula available as one-click template\n- Separate x₁ and x₂ input fields for quadratic solutions\n- Auto-compute feature calculates roots with discriminant analysis\n- Visual feedback with color-coded borders (green/red)\n- Progress tracking and status badges\n\nMajor Changes:\n- Work area converted from textarea to MathLive field\n- Added three keyboard toggle icons per quadratic question\n- Implemented dual field detection via solution_set marking method\n- Auto-focus work area on page load\n- Both x₁ and x₂ fields turn green/red together on validation\n\nNew Features:\n- 6 custom MathLive keyboards (KS3/KS4, Algebra, Quadratic, Calculus, Compare, Basic)\n- Quadratic formula template with one-click insertion\n- Auto-calculate button for quadratic equations\n- Individual question check buttons\n- Real-time progress bar\n- Quadratic function plotter with interactive graphing\n\nFiles Added:\n- js/mathlive-handler.js - Complete MathLive field management\n- js/quadratic-plotter.js - Interactive graphing functionality\n- quadratic-demo.html - Standalone quadratic plotter demo\n- worksheets/quadratic-equations-compute-demo.json - Test worksheet with 6 questions\n- Comprehensive documentation (10+ markdown guides)\n\nFixes:\n- Added missing .hidden CSS class (feedback not showing)\n- Increased auto-focus delay to 300ms (reliability)\n- Enhanced visual feedback system\n\nDocumentation:\n- COMPLETE_WORKFLOW_GUIDE.md - Step-by-step student workflow\n- QUADRATIC_DUAL_FIELDS.md - Dual fields implementation\n- IMPLEMENTATION_VERIFICATION.md - Complete testing guide\n- READY_TO_TEST.md - Quick start guide\n- And 10+ additional comprehensive guides\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(cat:*)",
+      "Bash(git ls-tree:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

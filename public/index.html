@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Math Arcade - Revision Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Arcade Theme CSS */
+        :root {
+            --neon-pink: #ff006e;
+            --neon-blue: #00d9ff;
+            --neon-green: #39ff14;
+            --neon-yellow: #ffea00;
+            --neon-purple: #bf00ff;
+            --dark-bg: #0a0e27;
+            --darker-bg: #050816;
+            --arcade-border: #1a1f3a;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridScroll 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        /* Neon glow text */
+        .neon-title {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--neon-blue);
+            text-shadow:
+                0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-blue),
+                0 0 30px var(--neon-blue),
+                0 0 40px var(--neon-pink);
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Arcade header */
+        .arcade-header {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1423 100%);
+            border-bottom: 3px solid var(--neon-blue);
+            box-shadow:
+                0 0 20px rgba(0, 217, 255, 0.3),
+                inset 0 -3px 10px rgba(0, 217, 255, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Arcade button */
+        .arcade-btn {
+            background: linear-gradient(135deg, var(--arcade-border) 0%, var(--dark-bg) 100%);
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow:
+                0 0 10px rgba(0, 217, 255, 0.3),
+                inset 0 0 10px rgba(0, 217, 255, 0.1);
+        }
+
+        .arcade-btn:hover {
+            background: var(--neon-blue);
+            color: var(--dark-bg);
+            box-shadow:
+                0 0 20px var(--neon-blue),
+                0 0 30px rgba(0, 217, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Quick links section */
+        .quick-links-container {
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.8) 0%, rgba(15, 20, 35, 0.8) 100%);
+            border: 2px solid var(--neon-pink);
+            border-radius: 16px;
+            box-shadow:
+                0 0 30px rgba(255, 0, 110, 0.3),
+                inset 0 0 20px rgba(255, 0, 110, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Arcade card */
+        .arcade-card {
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.9) 0%, rgba(15, 20, 35, 0.9) 100%);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .arcade-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 217, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .arcade-card:hover::before {
+            left: 100%;
+        }
+
+        .arcade-card:hover {
+            border-color: var(--neon-blue);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow:
+                0 10px 40px rgba(0, 217, 255, 0.4),
+                0 0 20px rgba(0, 217, 255, 0.3),
+                inset 0 0 20px rgba(0, 217, 255, 0.1);
+        }
+
+        /* Color-coded cards */
+        .card-blue { border-color: var(--neon-blue); }
+        .card-blue:hover { box-shadow: 0 10px 40px rgba(0, 217, 255, 0.5); }
+
+        .card-green { border-color: var(--neon-green); }
+        .card-green:hover { box-shadow: 0 10px 40px rgba(57, 255, 20, 0.5); }
+
+        .card-purple { border-color: var(--neon-purple); }
+        .card-purple:hover { box-shadow: 0 10px 40px rgba(191, 0, 255, 0.5); }
+
+        .card-yellow { border-color: var(--neon-yellow); }
+        .card-yellow:hover { box-shadow: 0 10px 40px rgba(255, 234, 0, 0.5); }
+
+        /* Neon text colors */
+        .text-neon-blue { color: var(--neon-blue); }
+        .text-neon-green { color: var(--neon-green); }
+        .text-neon-purple { color: var(--neon-purple); }
+        .text-neon-yellow { color: var(--neon-yellow); }
+        .text-neon-pink { color: var(--neon-pink); }
+
+        /* Section titles */
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+            letter-spacing: 2px;
+        }
+
+        /* Emoji with glow */
+        .glow-emoji {
+            display: inline-block;
+            animation: emojiFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes emojiFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Loading animation */
+        .loading-text {
+            color: var(--neon-blue);
+            animation: loadingPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-yellow));
+        }
+
+        /* Main content z-index */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Retro pixel corners */
+        .pixel-corners {
+            position: relative;
+        }
+
+        .pixel-corners::before,
+        .pixel-corners::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--neon-blue);
+        }
+
+        .pixel-corners::before {
+            top: 0;
+            left: 0;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .pixel-corners::after {
+            bottom: 0;
+            right: 0;
+            border-left: none;
+            border-top: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="arcade-header">
+        <nav class="container mx-auto px-6 py-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <h1 class="neon-title text-xl sm:text-2xl md:text-3xl">
+                    <span class="glow-emoji">🎮</span> MATH ARCADE <span class="glow-emoji">🎮</span>
+                </h1>
+                <div class="flex gap-4">
+                    <a href="index.html" class="arcade-btn text-sm">Home</a>
+                    <a href="prompt-builder.html" class="arcade-btn text-sm">Builder</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <section class="mb-8">
+            <!-- Quick Links Section -->
+            <div class="quick-links-container p-6 mb-8 pixel-corners">
+                <h3 class="text-xl font-bold mb-4 text-center">
+                    <span class="text-neon-pink text-2xl">⚡ QUICK START ⚡</span>
+                </h3>
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    <a href="quadratic-demo.html" class="arcade-card card-blue p-5 group">
+                        <div class="text-center">
+                            <div class="text-3xl mb-2 glow-emoji">📊</div>
+                            <div class="font-bold text-neon-blue mb-2">QUADRATIC PLOTTER</div>
+                            <div class="text-sm text-gray-400">Interactive graphing tool</div>
+                        </div>
+                    </a>
+                    <a href="worksheet.html?id=quadratic-equations-demo" class="arcade-card card-green p-5 group">
+                        <div class="text-center">
+                            <div class="text-3xl mb-2 glow-emoji">✏️</div>
+                            <div class="font-bold text-neon-green mb-2">BASIC QUADRATIC</div>
+                            <div class="text-sm text-gray-400">5 questions with hints</div>
+                        </div>
+                    </a>
+                    <a href="worksheet.html?id=quadratic-equations-compute-demo" class="arcade-card card-purple p-5 group">
+                        <div class="text-center">
+                            <div class="text-3xl mb-2 glow-emoji">🔮</div>
+                            <div class="font-bold text-neon-purple mb-2">AUTO-COMPUTE</div>
+                            <div class="text-sm text-gray-400">6 questions + solutions</div>
+                        </div>
+                    </a>
+                    <a href="ANSWER_CHECKING_GUIDE.md" class="arcade-card card-yellow p-5 group">
+                        <div class="text-center">
+                            <div class="text-3xl mb-2 glow-emoji">📖</div>
+                            <div class="font-bold text-neon-yellow mb-2">ANSWER GUIDE</div>
+                            <div class="text-sm text-gray-400">How marking works</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Worksheets Section -->
+            <div class="text-center mb-6">
+                <h2 class="section-title inline-block">
+                    <span class="glow-emoji">📚</span> ALL WORKSHEETS <span class="glow-emoji">📚</span>
+                </h2>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" id="worksheet-list">
+                <div class="text-center text-gray-500 py-12 col-span-full">
+                    <div class="loading-text text-xl">▶ Loading worksheets...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/worksheet-loader.js"></script>
+    <script>
+        // Load and display all worksheets on page load
+        document.addEventListener('DOMContentLoaded', loadWorksheetList);
+    </script>
+</body>
+</html>

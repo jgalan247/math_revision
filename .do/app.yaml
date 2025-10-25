@@ -1,0 +1,15 @@
+name: math-revision-platform
+region: lon
+static_sites:
+  - name: math-revision-web
+    github:
+      repo: jgalan247/math_revision
+      branch: main
+      deploy_on_push: true
+    output_dir: public
+    index_document: index.html
+    error_document: index.html
+    routes:
+      - path: /
+    environment_slug: html
+    catchall_document: index.html

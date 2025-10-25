@@ -1,0 +1,36 @@
+# Development files
+*.backup
+*.old
+*~
+.DS_Store
+.vscode/
+.idea/
+
+# Node modules (if you add them later)
+node_modules/
+npm-debug.log*
+
+# Python cache (if you add backend later)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Environment variables
+.env
+.env.local
+
+# Build output
+dist/
+build/
+
+# OS files
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp

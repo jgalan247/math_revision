@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadratic Function Plotter Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+    <!-- MathLive -->
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive-static.css">
+    <script defer src="https://unpkg.com/mathlive"></script>
+
+    <link rel="stylesheet" href="css/worksheet.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-blue-600 text-white shadow-md">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold">Quadratic Function Plotter Demo</h1>
+                <div class="space-x-4">
+                    <a href="index.html" class="hover:text-blue-200">← Back to Home</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Interactive Quadratic Function Plotter</h2>
+            <p class="text-gray-600 mb-4">
+                Enter the coefficients for your quadratic function ax² + bx + c and see it plotted in real-time!
+            </p>
+
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Coefficient a</label>
+                    <input type="number" id="coeff-a" value="1" step="0.1"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Coefficient b</label>
+                    <input type="number" id="coeff-b" value="-2" step="0.1"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Coefficient c</label>
+                    <input type="number" id="coeff-c" value="-3" step="0.1"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                </div>
+            </div>
+
+            <button id="plot-btn" class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium mb-4">
+                Plot Function
+            </button>
+
+            <div id="plot-container"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Try the Quadratic Keyboard</h3>
+            <p class="text-gray-600 mb-4">
+                Click on the math field below to open the keyboard with the quadratic formula.
+            </p>
+
+            <div id="math-input-container"></div>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-3">📚 How to Use</h3>
+            <ul class="space-y-2 text-gray-700">
+                <li><strong>1.</strong> Enter coefficients a, b, and c in the input fields</li>
+                <li><strong>2.</strong> Click "Plot Function" to see the graph</li>
+                <li><strong>3.</strong> The plot shows:
+                    <ul class="ml-6 mt-1 space-y-1">
+                        <li>• The parabola curve (blue line)</li>
+                        <li>• The vertex (red dot) - the turning point</li>
+                        <li>• The roots/x-intercepts (green dots) - where y = 0</li>
+                        <li>• Function information and discriminant analysis</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bg-green-50 border border-green-200 rounded-lg p-6 mt-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-3">💡 Example Problems</h3>
+            <div class="space-y-3">
+                <button class="example-btn w-full text-left p-3 bg-white rounded border hover:border-green-500 transition-colors">
+                    <strong>Example 1:</strong> y = x² - 4x + 3 → a=1, b=-4, c=3
+                </button>
+                <button class="example-btn w-full text-left p-3 bg-white rounded border hover:border-green-500 transition-colors" data-a="1" data-b="0" data-c="-4">
+                    <strong>Example 2:</strong> y = x² - 4 → a=1, b=0, c=-4
+                </button>
+                <button class="example-btn w-full text-left p-3 bg-white rounded border hover:border-green-500 transition-colors" data-a="2" data-b="4" data-c="5">
+                    <strong>Example 3:</strong> y = 2x² + 4x + 5 → a=2, b=4, c=5 (no real roots)
+                </button>
+                <button class="example-btn w-full text-left p-3 bg-white rounded border hover:border-green-500 transition-colors" data-a="-1" data-b="2" data-c="3">
+                    <strong>Example 4:</strong> y = -x² + 2x + 3 → a=-1, b=2, c=3 (opens downward)
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/quadratic-plotter.js"></script>
+    <script src="js/mathlive-handler.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial plot
+            const plotBtn = document.getElementById('plot-btn');
+            const aInput = document.getElementById('coeff-a');
+            const bInput = document.getElementById('coeff-b');
+            const cInput = document.getElementById('coeff-c');
+
+            function plotFunction() {
+                const a = parseFloat(aInput.value) || 1;
+                const b = parseFloat(bInput.value) || 0;
+                const c = parseFloat(cInput.value) || 0;
+
+                // Clear previous plot
+                quadraticPlotter.removePlot(0);
+
+                // Create new plot
+                quadraticPlotter.createPlot('plot-container', a, b, c, 0);
+            }
+
+            plotBtn.addEventListener('click', plotFunction);
+
+            // Example buttons
+            document.querySelectorAll('.example-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const a = btn.dataset.a || 1;
+                    const b = btn.dataset.b || -4;
+                    const c = btn.dataset.c || 3;
+
+                    aInput.value = a;
+                    bInput.value = b;
+                    cInput.value = c;
+
+                    plotFunction();
+                });
+            });
+
+            // Create math field with quadratic keyboard
+            setTimeout(() => {
+                mathLiveHandler.createMathField('math-input-container', 999);
+            }, 1000);
+
+            // Plot initial function
+            plotFunction();
+        });
+    </script>
+</body>
+</html>

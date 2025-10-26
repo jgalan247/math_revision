@@ -3,17 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Builder - Math Revision Platform</title>
+    <title>🎮 Math Arcade - Prompt Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Arcade Theme -->
+    <link rel="stylesheet" href="css/arcade-theme.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <header class="bg-blue-600 text-white shadow-md">
+    <!-- Animated background stars -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Floating power-ups -->
+    <div class="powerup" style="top: 10%; left: 5%;">⭐</div>
+    <div class="powerup" style="top: 20%; right: 10%; animation-delay: 1s;">🏆</div>
+    <div class="powerup" style="top: 60%; left: 15%; animation-delay: 2s;">💎</div>
+    <div class="powerup" style="bottom: 15%; right: 20%; animation-delay: 1.5s;">🎯</div>
+
+    <!-- Coin counter -->
+    <div class="coin-counter">
+        <div class="coin">🪙</div>
+        <div style="margin-top: 8px;">PROMPTS: <span id="credits">0</span></div>
+    </div>
+
+    <header class="bg-blue-600 text-white shadow-md arcade-header">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold">Math Revision Platform</h1>
+                <h1 class="text-2xl font-bold">🎮 PROMPT BUILDER 🎮</h1>
                 <div class="space-x-4">
-                    <a href="index.html" class="hover:text-blue-200">Home</a>
-                    <a href="prompt-builder.html" class="hover:text-blue-200">Prompt Builder</a>
+                    <a href="index.html" class="hover:text-blue-200">🏠 HOME</a>
+                    <a href="prompt-builder.html" class="hover:text-blue-200">🔧 BUILDER</a>
                 </div>
             </div>
         </nav>
@@ -21,9 +38,9 @@
 
     <main class="container mx-auto px-6 py-8">
         <div class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-lg shadow-md p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">Corbett Maths Worksheet Prompt Builder</h2>
-                <p class="text-gray-600 mb-6">Generate a prompt for creating math worksheet JSONs from Corbett Maths PDFs</p>
+            <div class="bg-white rounded-lg shadow-md p-8 arcade-card">
+                <h2 class="text-3xl font-bold arcade-title mb-2">CORBETT MATHS WORKSHEET BUILDER</h2>
+                <p class="arcade-text mb-6">Generate a prompt for creating math worksheet JSONs from Corbett Maths PDFs</p>
                 
                 <form id="promptForm" class="space-y-6">
                     <div>
@@ -88,5 +105,59 @@
     </main>
 
     <script src="js/prompt-builder.js"></script>
+    <script>
+        // Create animated stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Sound effect
+        function playSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = 800;
+                oscillator.type = 'square';
+
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (e) {
+                console.log('Audio not available');
+            }
+        }
+
+        // Add sound to buttons and track prompts
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', playSound);
+            });
+
+            // Track generated prompts
+            const form = document.getElementById('promptForm');
+            let promptCount = 0;
+            if (form) {
+                form.addEventListener('submit', () => {
+                    promptCount++;
+                    document.getElementById('credits').textContent = promptCount;
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,402 @@
+/* ========================================
+   MATH ARCADE - UNIFIED THEME
+   Consistent arcade styling across all pages
+   ======================================== */
+
+/* Import Press Start 2P font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Global Arcade Styling */
+html, body {
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Prevent any styles from overriding body background */
+body * {
+    font-family: inherit;
+}
+
+/* ========================================
+   ANIMATED BACKGROUND
+   ======================================== */
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Floating power-ups */
+.powerup {
+    position: fixed;
+    font-size: 2em;
+    animation: float 4s infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(180deg); }
+}
+
+/* ========================================
+   HEADER ARCADE STYLE
+   ======================================== */
+
+body > header,
+header.bg-blue-600,
+.arcade-header {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-bottom: 4px solid #FFD700 !important;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+body > header h1,
+header.bg-blue-600 h1,
+.arcade-header h1 {
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5) !important;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5), 0 0 10px #FFD700; }
+    to { text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5), 0 0 20px #FFD700, 0 0 30px #FFD700; }
+}
+
+body > header a,
+header.bg-blue-600 a,
+.arcade-header a {
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'Press Start 2P', cursive, monospace !important;
+}
+
+body > header a:hover,
+header.bg-blue-600 a:hover,
+.arcade-header a:hover {
+    background: rgba(255, 215, 0, 0.3) !important;
+    transform: scale(1.1);
+}
+
+/* ========================================
+   MAIN CONTENT AREA
+   ======================================== */
+
+main,
+body > main {
+    position: relative;
+    z-index: 10;
+}
+
+/* ========================================
+   ARCADE CARDS (Generic)
+   ======================================== */
+
+.arcade-card,
+.bg-white.rounded-lg.shadow-md {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 4px solid #FFD700 !important;
+    border-radius: 20px !important;
+    padding: 24px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    margin-bottom: 24px !important;
+}
+
+.arcade-card h2,
+.arcade-card h3,
+.bg-white.rounded-lg.shadow-md h2,
+.bg-white.rounded-lg.shadow-md h3 {
+    color: #FFD700 !important;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5) !important;
+    font-family: 'Press Start 2P', cursive, monospace !important;
+}
+
+.arcade-card p,
+.bg-white.rounded-lg.shadow-md p {
+    color: #fff !important;
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    font-size: 0.7em !important;
+    line-height: 1.6 !important;
+}
+
+/* ========================================
+   BUTTONS - ARCADE STYLE
+   ======================================== */
+
+button,
+.btn,
+input[type="submit"] {
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    background: linear-gradient(145deg, #4facfe, #00f2fe) !important;
+    border: 3px solid #fff !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 0.7em !important;
+}
+
+button:hover,
+.btn:hover,
+input[type="submit"]:hover {
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+button:active,
+.btn:active {
+    transform: translateY(-1px) scale(1.02) !important;
+}
+
+button:disabled,
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Green button variant */
+.btn-success,
+button.bg-green-600,
+#copyBtn {
+    background: linear-gradient(145deg, #43e97b, #38f9d7) !important;
+}
+
+/* Red button variant */
+.btn-danger {
+    background: linear-gradient(145deg, #ff6b6b, #ee5a6f) !important;
+}
+
+/* ========================================
+   FORM INPUTS - ARCADE STYLE
+   ======================================== */
+
+input[type="text"],
+input[type="url"],
+input[type="number"],
+select,
+textarea {
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 3px solid #4facfe !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    font-size: 0.7em !important;
+    color: #000 !important;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    border-color: #FFD700 !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5) !important;
+    background: rgba(255, 255, 255, 1) !important;
+}
+
+label {
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    color: #FFD700 !important;
+    font-size: 0.7em !important;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+.loading-arcade {
+    text-align: center;
+    padding: 40px;
+    color: #FFD700 !important;
+    font-size: 0.8em !important;
+    animation: blink 1s infinite;
+    font-family: 'Press Start 2P', cursive, monospace !important;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+/* ========================================
+   COIN COUNTER
+   ======================================== */
+
+.coin-counter {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7) !important;
+    border: 3px solid #FFD700 !important;
+    border-radius: 15px !important;
+    padding: 15px !important;
+    color: #FFD700 !important;
+    font-size: 0.8em !important;
+    z-index: 100;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5) !important;
+    font-family: 'Press Start 2P', cursive, monospace !important;
+}
+
+.coin-counter .coin {
+    font-size: 1.5em;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/* ========================================
+   INFO BOXES
+   ======================================== */
+
+.info-box {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 3px solid #4facfe !important;
+    border-radius: 15px !important;
+    padding: 20px !important;
+    margin-top: 20px !important;
+}
+
+.info-box.success {
+    border-color: #43e97b !important;
+}
+
+.info-box.warning {
+    border-color: #fee140 !important;
+}
+
+.info-box.error {
+    border-color: #ff6b6b !important;
+}
+
+.info-box h3 {
+    color: #FFD700 !important;
+    font-size: 0.9em !important;
+    margin-bottom: 12px !important;
+}
+
+.info-box ul {
+    color: #fff !important;
+    font-size: 0.6em !important;
+    line-height: 1.8 !important;
+}
+
+.info-box strong {
+    color: #FFD700 !important;
+}
+
+/* ========================================
+   CODE/OUTPUT BLOCKS
+   ======================================== */
+
+pre,
+code {
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 2px solid #4facfe !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    color: #43e97b !important;
+    font-size: 0.6em !important;
+    line-height: 1.8 !important;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+    }
+
+    header h1 {
+        font-size: 1em !important;
+    }
+
+    header a {
+        font-size: 0.6em !important;
+        padding: 6px 12px !important;
+    }
+
+    .coin-counter {
+        top: 70px;
+        right: 10px;
+        padding: 10px !important;
+        font-size: 0.6em !important;
+    }
+
+    button,
+    input,
+    select {
+        font-size: 0.6em !important;
+    }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.arcade-title {
+    color: #FFD700 !important;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5) !important;
+    animation: pulse 2s ease-in-out infinite;
+    font-family: 'Press Start 2P', cursive, monospace !important;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.arcade-text {
+    color: #fff !important;
+    font-family: 'Press Start 2P', cursive, monospace !important;
+    font-size: 0.7em !important;
+    line-height: 1.6 !important;
+}
+
+.arcade-accent {
+    color: #FFD700 !important;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5) !important;
+}
+
+.hidden {
+    display: none !important;
+}
